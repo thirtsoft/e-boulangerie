@@ -4,7 +4,7 @@ export const routes: Routes = [
 
   {
     path: '',
-    redirectTo: 'gerant',
+    redirectTo: 'auth',
     pathMatch: 'full',
   },
   {
