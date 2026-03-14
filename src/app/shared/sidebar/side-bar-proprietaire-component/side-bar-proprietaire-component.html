@@ -1,0 +1,92 @@
+<div class="prop-shell" [class.sidebar-collapsed]="sidebarCollapsed()">
+  <!-- ══════ SIDEBAR ══════ -->
+  <aside class="prop-sidebar">
+    <!-- Brand -->
+    <div class="sb-brand">
+      <div class="sb-logo">🥐</div>
+      @if (!sidebarCollapsed()) {
+        <div class="sb-brand-text">
+          <span class="sb-name">Rose</span>
+          <span class="sb-sub">Groupe Boulangerie</span>
+        </div>
+      }
+      <button class="sb-toggle" (click)="sidebarCollapsed.set(!sidebarCollapsed())">
+        {{ sidebarCollapsed() ? '→' : '←' }}
+      </button>
+    </div>
+
+    <!-- Profile -->
+    @if (!sidebarCollapsed()) {
+      <div class="sb-profile">
+        <div class="sb-ava">P</div>
+        <div class="sb-profile-info">
+          <div class="sb-pnom">Propriétaire</div>
+          <div class="sb-pmail">proprietaire&#64;rose.sn</div>
+        </div>
+      </div>
+    }
+
+    <!-- Nav -->
+    <nav class="sb-nav">
+      @for (item of nav; track item.id) {
+        <button
+          class="sb-item"
+          [class.active]="sectionActive() === item.id"
+          (click)="sectionActive.set(item.id)"
+          [title]="item.label"
+        >
+          <span class="sb-ico">{{ item.icone }}</span>
+          @if (!sidebarCollapsed()) {
+            <span class="sb-label">{{ item.label }}</span>
+            @if (item.badge) {
+              <span class="sb-badge">{{ item.badge }}</span>
+            }
+          }
+        </button>
+      }
+    </nav>
+
+    @if (!sidebarCollapsed()) {
+      <div class="sb-footer">
+        <div class="sb-footer-stat">
+          <span class="sbf-val">{{ boulangeries().length }}</span>
+          <span class="sbf-lbl">Boulangeries</span>
+        </div>
+        <div class="sb-footer-stat">
+          <span class="sbf-val">{{ gerants().length }}</span>
+          <span class="sbf-lbl">Gérants</span>
+        </div>
+      </div>
+    }
+  </aside>
+
+  <!-- ══════ MAIN ══════ -->
+  <div class="prop-main">
+    <!-- Topbar -->
+    <header class="prop-topbar">
+      <div class="ptb-left">
+        <h2 class="ptb-title">
+          {{ getSectionLabel(sectionActive()) }}
+        </h2>
+      </div>
+      <div class="ptb-right">
+        <!-- Période (aperçu seulement) -->
+        @if (sectionActive() === 'apercu') {
+          <div class="periode-tabs">
+            @for (p of periodes; track p.id) {
+              <button
+                class="periode-tab"
+                [class.active]="periode() === p.id"
+                (click)="periode.set(p.id)"
+              >
+                {{ p.label }}
+              </button>
+            }
+          </div>
+        }
+        <div class="ptb-date">{{ todayStr }}</div>
+      </div>
+    </header>
+
+
+</div>

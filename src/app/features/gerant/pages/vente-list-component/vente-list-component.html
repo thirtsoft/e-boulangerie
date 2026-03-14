@@ -1,0 +1,49 @@
+<!-- ────────── VUE VENTES ────────── -->
+@if (vue() === 'ventes') {
+  <div class="gd-content">
+    <div class="content-header">
+      <div>
+        <h2>💰 Analyse des ventes</h2>
+        <p>Performances commerciales du jour</p>
+      </div>
+    </div>
+
+    <div class="kpis-4">
+      <div class="kpi-card kc-rose">
+        <div class="kc-top"><span class="kc-ico">💰</span></div>
+        <div class="kc-val" style="font-size: 14px">{{ fmtCFA(totalVentes()) }}</div>
+        <div class="kc-lbl">Ventes totales</div>
+      </div>
+      <div class="kpi-card kc-vert">
+        <div class="kc-top"><span class="kc-ico">📦</span></div>
+        <div class="kc-val">{{ totalCommandes() }}</div>
+        <div class="kc-lbl">Commandes</div>
+      </div>
+      <div class="kpi-card kc-or">
+        <div class="kc-top"><span class="kc-ico">📈</span></div>
+        <div class="kc-val" style="font-size: 13px">{{ fmtCFA(panierMoyen()) }}</div>
+        <div class="kc-lbl">Panier moyen</div>
+      </div>
+      <div class="kpi-card kc-vert">
+        <div class="kc-top"><span class="kc-ico">🚚</span></div>
+        <div class="kc-val">{{ livsTerminees() }}</div>
+        <div class="kc-lbl">Livraisons ok</div>
+      </div>
+    </div>
+
+    <div class="card chart-big">
+      <div class="card-head"><h3>Ventes par heure</h3></div>
+      <div class="bar-chart">
+        @for (v of ds.ventesHeure; track v.heure) {
+          <div class="bc-col">
+            <span class="bc-amount">{{ fmtK(v.ventes) }}</span>
+            <div class="bc-bar-outer">
+              <div class="bc-bar-inner" [style.height.%]="barHeight(v.ventes)"></div>
+            </div>
+            <span class="bc-lbl">{{ v.heure }}</span>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+}
