@@ -1,0 +1,1 @@
+import{Fa as o,Za as n,_a as a,kb as p}from"./chunk-VWFFAMJV.js";var c=class e{static \u0275fac=function(t){return new(t||e)};static \u0275cmp=o({type:e,selectors:[["app-compte-agent-local-list-component"]],decls:2,vars:0,template:function(t,l){t&1&&(n(0,"p"),p(1,"compte-agent-local-list-component works!"),a())},encapsulation:2})};export{c as CompteAgentLocalListComponent};
