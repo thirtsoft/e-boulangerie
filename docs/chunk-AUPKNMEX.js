@@ -1,1 +1,0 @@
-import{Fa as o,Za as n,_a as m,kb as a}from"./chunk-VWFFAMJV.js";var r=class t{static \u0275fac=function(e){return new(e||t)};static \u0275cmp=o({type:t,selectors:[["app-retour-commande-list-component"]],decls:2,vars:0,template:function(e,i){e&1&&(n(0,"p"),a(1,"retour-commande-list-component works!"),m())},encapsulation:2})};export{r as RetourCommandeListComponent};

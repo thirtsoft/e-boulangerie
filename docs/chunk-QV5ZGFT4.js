@@ -1,1 +1,0 @@
-import{Fa as n,Za as o,_a as s,kb as p}from"./chunk-VWFFAMJV.js";var i=class t{static \u0275fac=function(e){return new(e||t)};static \u0275cmp=n({type:t,selectors:[["app-depense-list-component"]],decls:2,vars:0,template:function(e,a){e&1&&(o(0,"p"),p(1,"depense-list-component works!"),s())},encapsulation:2})};export{i as DepenseListComponent};
