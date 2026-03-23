@@ -1,0 +1,78 @@
+<aside class="sidebar" [class.collapsed]="collapsed()" [class.open]="open()">
+  <!-- Brand / Logo -->
+  <div class="sidebar-brand">
+    <div class="brand-logo">🥐</div>
+    @if (!collapsed()) {
+      <div class="brand-text">
+        <span class="brand-name">Rose</span>
+        <span class="brand-sub">Groupe Boulangerie</span>
+      </div>
+    }
+    <button
+      class="brand-toggle"
+      (click)="toggleCollapse.emit()"
+      [attr.aria-label]="collapsed() ? 'Développer' : 'Réduire'"
+    >
+      {{ collapsed() ? '→' : '←' }}
+    </button>
+  </div>
+
+  <!-- Profile utilisateur -->
+  @if (!collapsed()) {
+    <div class="sidebar-profile">
+      <div class="profile-avatar">P</div>
+      <div class="profile-info">
+        <div class="profile-name">Propriétaire</div>
+        <div class="profile-email">proprietaire&#64;rose.sn</div>
+      </div>
+    </div>
+  }
+
+  <!-- Navigation -->
+  <nav class="sidebar-nav">
+    @for (item of navItems; track item.id) {
+      <a
+        class="nav-item"
+        [routerLink]="item.route"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: false }"
+        (click)="close.emit()"
+      >
+        <span class="nav-icon">{{ item.icon }}</span>
+        @if (!collapsed()) {
+          <span class="nav-label">{{ item.label }}</span>
+          @if (item.badge) {
+            <span class="nav-badge">{{ item.badge }}</span>
+          }
+        }
+      </a>
+    }
+  </nav>
+
+  <!-- Footer avec statistiques rapides -->
+  @if (!collapsed()) {
+    <div class="sidebar-footer">
+      <div class="footer-stat">
+        <span class="stat-value">4</span>
+        <span class="stat-label">Boulangeries</span>
+      </div>
+      <div class="footer-stat">
+        <span class="stat-value">4</span>
+        <span class="stat-label">Gérants</span>
+      </div>
+    </div>
+  }
+
+  <!-- Footer — Déconnexion -->
+  <div class="sb-footer">
+    <button class="sb-deconnexion" (click)="deconnecter()">
+      <span class="sb-ico">🔓</span>
+      <span class="sb-label">Déconnexion</span>
+    </button>
+  </div>
+
+  <!-- Version mobile : bouton fermeture -->
+  @if (open()) {
+    <button class="sidebar-close" (click)="close.emit()" aria-label="Fermer le menu">✕</button>
+  }
+</aside>
