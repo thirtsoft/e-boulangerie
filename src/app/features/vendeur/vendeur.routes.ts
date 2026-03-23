@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { MainLayoutVendeurCompoment } from '../../layouts/main-layout-vendeur-compoment/main-layout-vendeur-compoment';
+import { MainLayoutVendeurCompoment } from './components/main-layout-vendeur-compoment/main-layout-vendeur-compoment';
 
 export const VENDEUR_ROUTES: Routes = [
   {

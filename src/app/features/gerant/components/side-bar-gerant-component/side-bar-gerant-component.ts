@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, input, output } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { Router } from '@angular/router';
 
 interface NavItem {
@@ -26,14 +26,19 @@ export class SideBarGerantComponent {
   toggleCollapse = output<void>();
   close = output<void>();
 
-  constructor(private router: Router) { }
+  readonly router = inject(Router);
+
 
   nav: NavItem[] = [
     { route: '/gerant/dashboard', ico: '📊', label: 'Aperçu' },
     { route: '/gerant/livreurs', ico: '👷', label: 'Livreurs' },
-    { route: '/gerant/livraison', ico: '🚚', label: 'Livraisons' },
-    { route: '/gerant/production', ico: '🏭', label: 'Production' },
+    { route: '/gerant/livraisons', ico: '🚚', label: 'Livraisons' },
+    { route: '/gerant/productions', ico: '🏭', label: 'Production' },
     { route: '/gerant/ventes', ico: '💰', label: 'Ventes' },
+    { route: '/gerant/commandes', ico: '📦', label: 'Commandes' },
+    { route: '/gerant/retours', ico: '🏪', label: 'Retours' },
+    { route: '/gerant/personnels', ico: '👤', label: 'Personnels' },
+    { route: '/gerant/depenses', ico: '💼', label: 'Dépenses' },
   ];
 
   isActive(route: string): boolean {

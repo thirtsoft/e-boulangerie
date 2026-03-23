@@ -21,8 +21,6 @@ export const GERANT_ROUTES: Routes = [
         title: 'Aperçu — Gérant',
       },
 
-      // ── Livreurs ──────────────────────────────────────
-      // 👉 Adapter le chemin selon votre structure réelle
       {
         path: 'livreurs',
         loadComponent: () =>
@@ -31,31 +29,52 @@ export const GERANT_ROUTES: Routes = [
         title: 'Livreurs',
       },
 
-      // ── Livraisons ────────────────────────────────────
       {
-        path: 'livraison',
+        path: 'livraisons',
         loadComponent: () =>
           import('./pages/livraison-list-component/livraison-list-component')
             .then(m => m.LivraisonListComponent),
         title: 'Livraisons',
       },
 
-      // ── Production ────────────────────────────────────
       {
-        path: 'production',
+        path: 'productions',
         loadComponent: () =>
           import('./pages/production-list-component/production-list-component')
             .then(m => m.ProductionListComponent),
         title: 'Production',
       },
 
-      // ── Ventes ────────────────────────────────────────
       {
         path: 'ventes',
         loadComponent: () =>
           import('./pages/vente-list-component/vente-list-component')
             .then(m => m.VenteListComponent),
         title: 'Ventes',
+      },
+
+      {
+        path: 'commandes',
+        loadComponent: () =>
+          import('./pages/commande-list-component/commande-list-component')
+            .then(m => m.CommandeListComponent),
+        title: 'Commandes',
+      },
+
+      {
+        path: 'passser-une-commande',
+        loadComponent: () =>
+          import('./pages/passer-une-commande-component/passer-une-commande-component')
+            .then(m => m.PasserUneCommandeComponent),
+        title: 'Passer une commande',
+      },
+
+      {
+        path: 'historique-commandes',
+        loadComponent: () =>
+          import('./pages/commande/historique-commandes-component/historique-commandes-component')
+            .then(m => m.HistoriqueCommandesComponent),
+        title: 'Historique des commandes',
       },
 
       {
@@ -67,7 +86,16 @@ export const GERANT_ROUTES: Routes = [
       },
 
       {
-        path: 'personnel',
+        path: 'enregistrer-un-retour',
+        loadComponent: () =>
+          import('./pages/enregistrer-un-retour-component/enregistrer-un-retour-component')
+            .then(m => m.EnregistrerUnRetourComponent),
+        title: 'Retours',
+      },
+
+
+      {
+        path: 'personnels',
         loadComponent: () =>
           import('./pages/compte-agent-local-list-component/compte-agent-local-list-component')
             .then(m => m.CompteAgentLocalListComponent),

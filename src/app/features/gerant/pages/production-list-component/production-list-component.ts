@@ -27,6 +27,8 @@ export class ProductionListComponent {
 
   vue = signal<Vue>('production');
 
+  showFormProduction = signal(false);
+
   naviguer(id: Vue) {
     this.vue.set(id);
   }
@@ -47,5 +49,24 @@ export class ProductionListComponent {
   }
 
   pctProd(p: Production) { return Math.round(p.quantiteRealisee / p.quantitePlanifiee * 100); }
+
+  newProduction = signal({ libelle: '', quantite: '', employees: '', description: '', dateEmbauche: '' });
+  employees = ['Moussa Thiaw', 'Ibrahima Sow', 'Omar Faye', 'Cheikh Ndiaye', 'Babacar Diouf', 'Souley Diallo', 'Khady Diallo', 'Fatim Baary'];
+
+
+  ajouterProduction() {
+    const d = this.newProduction();
+    if (!d.libelle || !d.quantite || !d.description || !d.employees) return;
+
+    this.showFormProduction.set(false);
+    this.newProduction.set({ libelle: '', quantite: '', employees: '', description: '', dateEmbauche: '' });
+  }
+
+  setLibelle(v: string) { this.newProduction.update(n => ({ ...n, prenom: v })); }
+  setQuantite(v: string) { this.newProduction.update(n => ({ ...n, nom: v })); }
+  setDescription(v: string) { this.newProduction.update(n => ({ ...n, telephone: v })); }
+  setEmployees(v: string) { this.newProduction.update(n => ({ ...n, zone: v })); }
+  setNouveauMoto(v: string) { this.newProduction.update(n => ({ ...n, moto: v })); }
+  setDateProduction(v: string) { this.newProduction.update(n => ({ ...n, dateEmbauche: v })); }
 
 }

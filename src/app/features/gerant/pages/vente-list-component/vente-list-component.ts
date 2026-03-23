@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Livraison, Production } from '../../../../core/models';
 import { DataService } from '../../../../shared/data.service';
 
 
@@ -24,8 +23,6 @@ export interface Livreur {
 })
 export class VenteListComponent {
 
-  protected readonly Math = Math;
-  ds = inject(DataService);
 
   vue = signal<Vue>('ventes');
 
@@ -34,48 +31,91 @@ export class VenteListComponent {
     this.vue.set(id);
   }
 
-  //  totalVentes = computed(() => this.ds.livraisons.reduce((s, l) => s + l.montant, 0) + 85000);
-  //  livsTerminees = computed(() => this.ds.livraisons.filter(l => l.statut === 'livre').length);
-  livsEnCours = computed(() => this.ds.livraisons.filter(l => l.statut === 'en_cours').length);
-  livsEnRetard = computed(() => this.ds.livraisons.filter(l => l.statut === 'en_retard').length);
-  //  prodsEnCours = computed(() => this.ds.productions.filter(p => p.statut === 'en_cours').length);
-  //  stockCrit = computed(() => this.ds.produits.filter(p => p.stock < 10).length);
-  //  maxVentes = () => Math.max(...this.ds.ventesHeure.map(v => v.ventes));
+
+  protected readonly Math = Math;
+  ds = inject(DataService);
+
+  // Période sélectionnée
+  periode = signal<'jour' | 'semaine' | 'mois'>('jour');
+
+  // Filtres
+  showFiltres = signal(false);
+  dateDebut = signal('');
+  dateFin = signal('');
+
+  // Statistiques calculées
+  totalVentes = computed(() => this.ds.livraisons.reduce((s, l) => s + l.montant, 0) + 85000);
   totalCommandes = computed(() => this.ds.livraisons.reduce((s, l) => s + l.commandes, 0));
   panierMoyen = computed(() => Math.round(this.totalVentes() / Math.max(this.totalCommandes(), 1)));
+  livraisonsTerminees = computed(() => this.ds.livraisons.filter(l => l.statut === 'livre').length);
 
+  // Données du graphique
+  ventesParHeure = computed(() => this.ds.ventesHeure);
+  maxVentesHeure = computed(() => Math.max(...this.ventesParHeure().map(v => v.ventes)));
 
+  // Top produits
+  topProduits = computed(() => {
+    // Simulation de données - à remplacer par vos vraies données
+    return [
+      { nom: 'Baguette tradition', quantite: 245, montant: 122500, evolution: +12 },
+      { nom: 'Croissant', quantite: 180, montant: 90000, evolution: +8 },
+      { nom: 'Pain complet', quantite: 120, montant: 84000, evolution: -3 },
+      { nom: 'Baguette aux céréales', quantite: 95, montant: 66500, evolution: +15 },
+      { nom: 'Pain de mie', quantite: 82, montant: 57400, evolution: +5 },
+    ];
+  });
 
-  totalVentes = computed(() => this.ds.livraisons.reduce((s, l) => s + l.montant, 0) + 85000);
-  livsTerminees = computed(() => this.ds.livraisons.filter(l => l.statut === 'livre').length);
-  prodsEnCours = computed(() => this.ds.productions.filter(p => p.statut === 'en_cours').length);
-  stockCrit = computed(() => this.ds.produits.filter(p => p.stock < 10).length);
+  // Ventes par jour de la semaine
+  ventesParJour = computed(() => {
+    const jours = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
+    return jours.map((jour, index) => ({
+      jour,
+      montant: Math.round(150000 + Math.random() * 100000) // Simulation
+    }));
+  });
 
-  maxVentes(): number {
-    return Math.max(...this.ds.ventesHeure.map(v => v.ventes));
+  // Méthodes
+  changerPeriode(p: 'jour' | 'semaine' | 'mois') {
+    this.periode.set(p);
   }
 
-  barHeight(ventes: number): number {
-    return Math.round((ventes / this.maxVentes()) * 100);
+  toggleFiltres() {
+    this.showFiltres.update(v => !v);
   }
 
-  fmtK(n: number): string {
-    return (n / 1000).toFixed(0) + 'k';
+  appliquerFiltres() {
+    console.log('Filtres appliqués:', {
+      dateDebut: this.dateDebut(),
+      dateFin: this.dateFin()
+    });
+    this.showFiltres.set(false);
   }
 
-  initiales(lr: Livreur) { return (lr.prenom[0] + lr.nom[0]).toUpperCase(); }
+  resetFiltres() {
+    this.dateDebut.set('');
+    this.dateFin.set('');
+  }
 
-  statLiv(l: Livraison) {
-    const m: Record<string, { label: string; cls: string }> = {
-      en_cours: { label: 'En cours', cls: 'warning' },
-      livre: { label: 'Livré', cls: 'success' },
-      en_retard: { label: 'En retard', cls: 'danger' },
+  exporterVentes() {
+    console.log('Export des ventes');
+    // Implémenter la logique d'export
+  }
+
+  formatMontant(n: number): string {
+    return new Intl.NumberFormat('fr-FR', {
+      style: 'currency',
+      currency: 'XOF',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0
+    }).format(n).replace('XOF', '') + ' FCFA';
+  }
+
+  getPeriodeLabel(): string {
+    const labels = {
+      jour: "aujourd'hui",
+      semaine: 'cette semaine',
+      mois: 'ce mois'
     };
-    return m[l.statut] ?? { label: l.statut, cls: 'info' };
+    return labels[this.periode()];
   }
-
-
-  pctProd(p: Production) { return Math.round(p.quantiteRealisee / p.quantitePlanifiee * 100); }
-  fmtCFA(n: number) { return new Intl.NumberFormat('fr-FR').format(n) + ' FCFA'; }
-
 }
