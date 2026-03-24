@@ -1,1 +1,0 @@
-import{Ha as n,ab as o,bb as m,qb as a}from"./chunk-QBVJODZE.js";var i=class t{static \u0275fac=function(e){return new(e||t)};static \u0275cmp=n({type:t,selectors:[["app-commande-details-component"]],decls:2,vars:0,template:function(e,p){e&1&&(o(0,"p"),a(1,"commande-details-component works!"),m())},encapsulation:2})};export{i as CommandeDetailsComponent};

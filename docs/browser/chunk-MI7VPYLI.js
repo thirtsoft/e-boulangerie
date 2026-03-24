@@ -1,1 +1,0 @@
-import{Ha as n,ab as p,bb as o,qb as s}from"./chunk-QBVJODZE.js";var i=class t{static \u0275fac=function(e){return new(e||t)};static \u0275cmp=n({type:t,selectors:[["app-type-depense-list-component"]],decls:2,vars:0,template:function(e,a){e&1&&(p(0,"p"),s(1,"type-depense-list-component works!"),o())},encapsulation:2})};export{i as TypeDepenseListComponent};
